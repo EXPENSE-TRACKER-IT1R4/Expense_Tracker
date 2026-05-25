@@ -89,3 +89,49 @@ entry_category = tk.Entry(
 )
 
 entry_category.grid(row=2, column=1)
+
+#ACHACOSO
+
+# EXPENSE LIST
+expense_list = []
+
+# ADD EXPENSE FUNCTION
+def add_expense():
+
+    name = entry_name.get()
+    amount = entry_amount.get()
+    category = entry_category.get()
+
+    expense = {
+        "name": name,
+        "amount": amount,
+        "category": category
+    }
+
+    expense_list.append(expense)
+
+    listbox.insert(
+        tk.END,
+        f"{name} | ₱{amount} | {category}"
+    )
+
+# BUTTON FRAME
+button_frame = tk.Frame(
+    root,
+    bg="#1E1E2F"
+)
+
+button_frame.pack(pady=10)
+
+# ADD BUTTON
+button_add = tk.Button(
+    button_frame,
+    text="Add Expense",
+    bg="#4CAF50",
+    fg="white",
+    font=("Arial", 12, "bold"),
+    width=15,
+    command=add_expense
+)
+
+button_add.grid(row=0, column=0, padx=10)
