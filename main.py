@@ -227,3 +227,75 @@ button_delete = tk.Button(
 )
 
 button_delete.grid(row=0, column=1, padx=10)
+
+
+#ESPRAGUIRA
+
+# VALIDATED ADD FUNCTION
+def add_expense():
+
+    name = entry_name.get()
+    amount = entry_amount.get()
+    category = entry_category.get()
+
+    # EMPTY VALIDATION
+    if name == "" or amount == "" or category == "":
+
+        messagebox.showwarning(
+            "Input Error",
+            "Please fill all fields."
+        )
+
+        return
+
+    # INVALID AMOUNT VALIDATION
+    try:
+        amount = float(amount)
+
+    except:
+
+        messagebox.showwarning(
+            "Invalid Input",
+            "Amount must be a number."
+        )
+
+        return
+
+    expense = {
+        "name": name,
+        "amount": amount,
+        "category": category
+    }
+
+    expense_list.append(expense)
+
+    listbox.insert(
+        tk.END,
+        f"{name} | ₱{amount} | {category}"
+    )
+
+    update_total()
+    save_expenses()
+
+    # CLEAR INPUTS
+    entry_name.delete(0, tk.END)
+    entry_amount.delete(0, tk.END)
+    entry_category.delete(0, tk.END)
+
+# TRY-EXCEPT SAVE FUNCTION
+def save_expenses():
+
+    try:
+        with open(FILE_NAME, "w") as file:
+
+            json.dump(expense_list, file, indent=4)
+
+    except:
+
+        messagebox.showerror(
+            "Error",
+            "Failed to save file."
+        )
+
+load_expenses()
+root.mainloop()
