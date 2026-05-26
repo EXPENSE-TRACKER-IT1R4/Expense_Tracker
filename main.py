@@ -171,3 +171,59 @@ total_label = tk.Label(
 )
 
 total_label.pack(pady=10)
+
+#OLANO
+
+FILE_NAME = "expenses.json"
+
+# SAVE FUNCTION
+def save_expenses():
+
+    with open(FILE_NAME, "w") as file:
+        json.dump(expense_list, file, indent=4)
+
+# LOAD FUNCTION
+def load_expenses():
+
+    global expense_list
+
+    if os.path.exists(FILE_NAME):
+
+        with open(FILE_NAME, "r") as file:
+
+            expense_list = json.load(file)
+
+            for expense in expense_list:
+
+                listbox.insert(
+                    tk.END,
+                    f"{expense['name']} | ₱{expense['amount']} | {expense['category']}"
+                )
+
+# DELETE FUNCTION
+def delete_expense():
+
+    selected = listbox.curselection()
+
+    if selected:
+
+        index = selected[0]
+
+        listbox.delete(index)
+
+        expense_list.pop(index)
+
+        save_expenses()
+
+# DELETE BUTTON
+button_delete = tk.Button(
+    button_frame,
+    text="Delete Expense",
+    bg="#E53935",
+    fg="white",
+    font=("Arial", 12, "bold"),
+    width=15,
+    command=delete_expense
+)
+
+button_delete.grid(row=0, column=1, padx=10)
