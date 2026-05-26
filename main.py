@@ -135,3 +135,39 @@ button_add = tk.Button(
 )
 
 button_add.grid(row=0, column=0, padx=10)
+
+#REGENCIA
+
+# LISTBOX
+listbox = tk.Listbox(
+    root,
+    width=80,
+    height=15,
+    font=("Arial", 11),
+    bg="#F5F5F5"
+)
+
+listbox.pack(pady=10)
+
+# TOTAL FUNCTION
+def update_total():
+
+    total = 0
+
+    for expense in expense_list:
+        total += float(expense["amount"])
+
+    total_label.config(
+        text=f"Total Expenses: ₱{total:.2f}"
+    )
+
+# TOTAL LABEL
+total_label = tk.Label(
+    root,
+    text="Total Expenses: ₱0.00",
+    font=("Arial", 16, "bold"),
+    bg="#1E1E2F",
+    fg="#FFD700"
+)
+
+total_label.pack(pady=10)
